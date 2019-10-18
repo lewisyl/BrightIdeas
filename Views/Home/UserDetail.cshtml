@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "User Detail";
+}
+
+@using BrightIdeas.Models
+@model UserDetail
+
+<div class="row">
+    <div class="col-9">
+        <a href="/dashboard">Bright Ideas</a>
+    </div>
+    <div class="col-3">
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="row">
+    <p>Name: @Model.User.Name</p>
+    <p>Name: @Model.User.Alias</p>
+    <p>Name: @Model.User.Email</p>
+</div>
+<hr>
+<div class="row">
+    <p>Total Number of Posts: @Model.TotalPosts</p>
+    <p>Total Number of Likes: @Model.TotalLikes</p>
+</div>

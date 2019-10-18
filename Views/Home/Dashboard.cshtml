@@ -1,0 +1,62 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@using BrightIdeas.Models
+@model Dashboard
+
+<div class="row">
+    <div class="col-9">
+        <h1>Welcome back, @Model.ThisUser.Alias!</h1>
+    </div>
+    <div class="col-3">
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="row">
+    <form action="/new-idea" method="POST">
+        <div class="form-group">
+            <label asp-for="Idea.Content"></label>
+            <textarea class="form-control" asp-for="Idea.Content" id="Idea.Content" placeholder="Post something witty here..." cols="50" rows="3"></textarea>
+            <span asp-validation-for="Idea.Content" class="validationMsg"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Idea!</button>
+    </form>
+</div>
+
+<div class="row ideas">
+    <ul class="list-group">
+        @{
+            foreach (var item in @Model.AllIdeas)
+            {
+                <li class="list-group-item">
+                    <p>
+                        <a href="/users/@item.CreatedBy">@Model.AllUsers.FirstOrDefault(u=>u.UserId==@item.CreatedBy).Alias</a> says:
+                    </p>
+                    <p>
+                        @item.Content
+                    </p>
+                    <p>
+                        <span class="likeNCount">
+                            <a href="/like/@item.IdeaId">Like</a>
+                            
+                        </span>
+                        <span> | </span>
+                        <span class="likeNCount">
+                            <a href="/idea-detail/@item.IdeaId">@item.LikedBy.Count people</a> like it.
+                        </span>
+                        <span> | </span>
+                        @if (@item.CreatedBy == @Model.ThisUser.UserId)
+                        {
+                            <span class="likeNCount">
+                                <a href="/delete/@item.IdeaId">Delete</a>
+                            </span>
+                        }
+                    </p>
+                </li>
+            }
+        }
+        
+    </ul>
+</div>

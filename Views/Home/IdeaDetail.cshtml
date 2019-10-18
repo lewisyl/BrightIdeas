@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Idea Detail";
+}
+
+@using BrightIdeas.Models
+@model Dashboard
+
+<div class="row">
+    <div class="col-9">
+        <a href="/dashboard">Bright Ideas</a>
+    </div>
+    <div class="col-3">
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="row detailIdeas">
+    <h3>
+        <a href="/users/@Model.Idea.CreatedBy">@Model.AllUsers.FirstOrDefault(u=>u.UserId==@Model.Idea.CreatedBy).Alias</a> says:
+    </h3>
+    <h4>
+        @Model.Idea.Content
+    </h4>
+</div>
+
+<div class="row">
+    <h6>People who liked this post:</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Alias</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var liker in @Model.Likers)
+                {
+                    <tr>
+                        <td scope="col">
+                            <a href="/users/@liker.UserId">@liker.Alias</a>
+                        </td>
+                        <td scope="col">
+                            @liker.Name
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
